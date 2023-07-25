@@ -2,7 +2,15 @@ const Todo = require("../model/Todo");
 const getTodos = async (req, res) => {
 	try{
 		const data = await Todo.find();
-		res.json(data);
+		console.log(data);
+		if(!data.length)
+		{
+			return res.status(404).json({message: "Can not find data"});
+		}
+		else
+		{
+		res.status(200).json(data);
+		}
 	}
 	catch(err){
 		res.status(500).json({message: error.message});
@@ -45,7 +53,8 @@ const updateTodos = async (req, res) => {
 const deleteTodos = async (req, res) => {
  try{
   const ddata=await Todo.deleteOne({ _id: req.params.todoID });
-    res.status(200).json({"message":"data deleted"});
+    console.log(ddata);
+	 res.status(200).json({"message":"data deleted"});
  }
    catch(err)
 	{
